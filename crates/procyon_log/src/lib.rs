@@ -1,43 +1,32 @@
+pub extern crate chrono;
+pub extern crate serde_json;
+
 pub mod inventory;
+pub mod lifecycle;
 pub mod location;
 pub mod statistics;
 
-use chrono::NaiveDateTime;
-use inventory::{Cargo, Loadout, Materials, ShipLocker};
-use location::{FSDJump, FSDTarget, Location, StartJump};
+use chrono::{DateTime, Utc};
+
+use lifecycle::LifecycleEvent;
+
 use serde::{Deserialize, Serialize};
-use statistics::Statistics;
+
 
 /// An event type recorded in the game log.
 #[derive(Deserialize)]
-#[serde(tag = "event")]
+#[serde(untagged)]
 pub enum Event {
-    Fileheader(Fileheader),
-    Commander(Commander),
-    Materials(Materials),
-    Rank(Rank),
-    Progress(Progress),
-    Reuptation(Reputation),
-    EngineerProgress(EngineerProgress),
-    LoadGame(LoadGame),
-    Statistics(Box<Statistics>),
-    ReceiveText(ReceiveText),
-    Location(Box<Location>),
-    Music {},
-    ShipLocker(ShipLocker),
-    Missions {},
-    Loadout(Loadout),
-    Cargo(Cargo),
-    NavRoute {},
-    FSDTarget(FSDTarget),
-    StartJump(StartJump),
-    FSDJump(Box<FSDJump>),
+    /// A lifecycle event.
+    Lifecycle(LifecycleEvent),
 }
 
 /// A log entry in the Elite Dangerous game logs.
 #[derive(Deserialize)]
 pub struct Entry {
-    pub timestamp: NaiveDateTime,
+    /// The time at which this event occured.
+    pub timestamp: DateTime<Utc>,
+    /// The event's payload.
     #[serde(flatten)]
     pub payload: Event,
 }
@@ -183,7 +172,7 @@ pub enum Gamemode {
     Solo,
 }
 
-#[derive(Default, Debug, Clone, PartialEq, Serialize, Deserialize)]
+#[derive(Default, Debug, Clone, PartialEq, Eq, Serialize, Deserialize)]
 #[serde(rename_all = "PascalCase")]
 pub struct ReceiveText {
     pub from: String,
