@@ -1,5 +1,6 @@
 [workspace]
 members = [
+	"crates/procyon_log",
 	"apps/desktop/src-tauri"
 ]
 resolver = "2"
