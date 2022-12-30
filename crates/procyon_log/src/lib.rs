@@ -12,9 +12,8 @@ use lifecycle::LifecycleEvent;
 
 use serde::{Deserialize, Serialize};
 
-
 /// An event type recorded in the game log.
-#[derive(Deserialize)]
+#[derive(Debug, Serialize, Deserialize, PartialEq, Eq)]
 #[serde(untagged)]
 pub enum Event {
     /// A lifecycle event.
@@ -22,7 +21,7 @@ pub enum Event {
 }
 
 /// A log entry in the Elite Dangerous game logs.
-#[derive(Deserialize)]
+#[derive(Debug, Serialize, Deserialize, PartialEq, Eq)]
 pub struct Entry {
     /// The time at which this event occured.
     pub timestamp: DateTime<Utc>,
