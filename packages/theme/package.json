@@ -1,0 +1,7 @@
+{
+	"name": "@procyon/theme",
+	"main": "src/index.ts",
+	"dependencies": {
+		"@chakra-ui/react": "^2.4.2"
+	}
+}
