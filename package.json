@@ -1,12 +1,28 @@
 {
 	"private": true,
 	"scripts": {
-		"test": "echo \"Error: no test specified\" && exit 1"
+		"prepare": "husky install"
 	},
 	"devDependencies": {
+		"@commitlint/cli": "^17.3.0",
+		"@commitlint/config-conventional": "^17.3.0",
 		"@typescript-eslint/eslint-plugin": "^5.47.1",
 		"@typescript-eslint/parser": "^5.47.1",
 		"eslint": "^8.30.0",
+		"husky": "^8.0.2",
+		"lint-staged": "^13.1.0",
+		"prettier": "^2.8.1",
 		"turbo": "^1.6.3"
+	},
+	"lint-staged": {
+		"*.{css,scss,md,json}": "prettier --write",
+		"*.m?{ts,js}x?": [
+			"prettier --write",
+			"eslint --fix"
+		],
+		"*.rs": [
+			"cargo fmt --",
+			"cargo clippy --fix --allow-staged"
+		]
 	}
 }
