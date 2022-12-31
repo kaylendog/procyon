@@ -113,9 +113,9 @@ mod tests {
         let entry: Entry = serde_json::from_str(entry).unwrap();
         assert_eq!(
             entry.payload,
-            Event::Lifecycle(LifecycleEvent::ClearSavedGame(ClearSavedGame {
-                name: "HRC1".to_string()
-            }))
+            Event::Lifecycle(
+                LifecycleEvent::ClearSavedGame(ClearSavedGame { name: "HRC1".to_string() }).into()
+            )
         );
     }
 
@@ -136,16 +136,19 @@ mod tests {
         let entry: Entry = serde_json::from_str(entry).unwrap();
         assert_eq!(
             entry.payload,
-            Event::Lifecycle(LifecycleEvent::LoadGame(LoadGame {
-                commander: "HRC1".to_string(),
-                ship: "CobraMkIII".to_string(),
-                ship_id: 1,
-                gamemode: Gamemode::Group { group_name: "Mobius".to_string() },
-                credits: 600120,
-                loan: 0,
-                start_dead: false,
-                start_landed: false
-            }))
+            Event::Lifecycle(
+                LifecycleEvent::LoadGame(LoadGame {
+                    commander: "HRC1".to_string(),
+                    ship: "CobraMkIII".to_string(),
+                    ship_id: 1,
+                    gamemode: Gamemode::Group { group_name: "Mobius".to_string() },
+                    credits: 600120,
+                    loan: 0,
+                    start_dead: false,
+                    start_landed: false
+                })
+                .into()
+            )
         );
     }
 
@@ -160,10 +163,13 @@ mod tests {
         let entry: Entry = serde_json::from_str(entry).unwrap();
         assert_eq!(
             entry.payload,
-            Event::Lifecycle(LifecycleEvent::NewCommander(NewCommander {
-                name: "HRC1".to_string(),
-                package: "ImperialBountyHunter".to_string(),
-            }))
+            Event::Lifecycle(
+                LifecycleEvent::NewCommander(NewCommander {
+                    name: "HRC1".to_string(),
+                    package: "ImperialBountyHunter".to_string(),
+                })
+                .into()
+            )
         )
     }
 }

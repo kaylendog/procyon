@@ -3,12 +3,16 @@
 pub extern crate chrono;
 pub extern crate serde_json;
 
+pub mod combat;
 pub mod common;
+pub mod exploration;
 pub mod lifecycle;
 pub mod travel;
 
 use chrono::{DateTime, Utc};
 
+use combat::CombatEvent;
+use exploration::ExplorationEvent;
 use lifecycle::LifecycleEvent;
 
 use serde::{Deserialize, Serialize};
@@ -29,7 +33,11 @@ pub struct Entry {
 #[serde(untagged)]
 pub enum Event {
     /// A lifecycle event.
-    Lifecycle(LifecycleEvent),
+    Lifecycle(Box<LifecycleEvent>),
     /// A travel event.
-    Travel(TravelEvent),
+    Travel(Box<TravelEvent>),
+    /// A combat event.
+    Combat(Box<CombatEvent>),
+    /// An exploration event.
+    Exploration(Box<ExplorationEvent>),
 }
