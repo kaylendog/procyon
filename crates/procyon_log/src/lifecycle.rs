@@ -9,6 +9,7 @@ pub enum LifecycleEvent {
     ClearSavedGame(ClearSavedGame),
     NewCommander(NewCommander),
     LoadGame(LoadGame),
+    Progress(Progress),
 }
 
 /// Event fired when a save game is cleared.
@@ -66,6 +67,32 @@ pub enum Gamemode {
         #[serde(rename = "Group")]
         group_name: String,
     },
+}
+
+/// Event containing the progress of the commander to the next rank for each faction.
+#[derive(Default, Debug, Clone, PartialEq, Eq, Serialize, Deserialize)]
+#[serde(rename_all = "PascalCase")]
+pub struct Progress {
+    pub combat: i64,
+    pub trade: i64,
+    pub explore: i64,
+    pub empire: i64,
+    pub federation: i64,
+    #[serde(rename = "CQC")]
+    pub cqc: i64,
+}
+
+/// Event containing the rank of each commander
+#[derive(Default, Debug, Clone, PartialEq, Serialize, Deserialize)]
+#[serde(rename_all = "PascalCase")]
+pub struct Rank {
+    pub combat: i64,
+    pub trade: i64,
+    pub explore: i64,
+    pub empire: i64,
+    pub federation: i64,
+    #[serde(rename = "CQC")]
+    pub cqc: i64,
 }
 
 #[cfg(test)]
