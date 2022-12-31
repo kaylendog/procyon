@@ -83,7 +83,7 @@ pub struct Progress {
 }
 
 /// Event containing the rank of each commander
-#[derive(Default, Debug, Clone, PartialEq, Serialize, Deserialize)]
+#[derive(Default, Debug, Clone, PartialEq, Eq, Serialize, Deserialize)]
 #[serde(rename_all = "PascalCase")]
 pub struct Rank {
     pub combat: i64,

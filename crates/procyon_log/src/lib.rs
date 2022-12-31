@@ -3,6 +3,7 @@
 pub extern crate chrono;
 pub extern crate serde_json;
 
+pub mod common;
 pub mod lifecycle;
 pub mod travel;
 
@@ -14,7 +15,7 @@ use serde::{Deserialize, Serialize};
 use travel::TravelEvent;
 
 /// A log entry in the Elite Dangerous game logs.
-#[derive(Debug, Serialize, Deserialize, PartialEq, Eq)]
+#[derive(Debug, Serialize, Deserialize, PartialEq)]
 pub struct Entry {
     /// The time at which this event occured.
     pub timestamp: DateTime<Utc>,
@@ -24,7 +25,7 @@ pub struct Entry {
 }
 
 /// An event type recorded in the game log.
-#[derive(Debug, Serialize, Deserialize, PartialEq, Eq)]
+#[derive(Debug, Serialize, Deserialize, PartialEq)]
 #[serde(untagged)]
 pub enum Event {
     /// A lifecycle event.
