@@ -1,0 +1,9 @@
+{
+	"name": "procyon-plugin-example",
+	"version": "1.0.0",
+	"description": "",
+	"main": "dist/index.js",
+	"dependencies": {
+		"@procyon/plugin": "workspace:*"
+	}
+}
