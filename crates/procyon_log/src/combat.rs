@@ -1,3 +1,5 @@
+//! Events relating to combat, bounties, and ship damage.
+
 use serde::{Deserialize, Serialize};
 
 /// Enumeration of combat events.

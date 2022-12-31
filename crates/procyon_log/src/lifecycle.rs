@@ -1,4 +1,5 @@
-//! Contains events relating to game lifecycle.
+//! Contains events relating to game lifecycle, emitted at startup or while
+//! in the game menu.
 
 use serde::{Deserialize, Serialize};
 

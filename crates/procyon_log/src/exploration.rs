@@ -1,3 +1,5 @@
+//! Events relating to exploration, discoveries, and material gathering.
+
 use serde::{Deserialize, Serialize};
 
 #[derive(Debug, Clone, PartialEq, Serialize, Deserialize)]

@@ -1,3 +1,5 @@
+//! Common data structures, such as economy and government types.
+
 use serde::{Deserialize, Serialize};
 
 /// An enumeration of economy types.

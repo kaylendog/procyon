@@ -28,7 +28,8 @@ pub struct Entry {
     pub payload: Event,
 }
 
-/// An event type recorded in the game log.
+/// An event type recorded in the game log. Contents are heap allocated since
+/// their size is significant.
 #[derive(Debug, Serialize, Deserialize, PartialEq)]
 #[serde(untagged)]
 pub enum Event {
