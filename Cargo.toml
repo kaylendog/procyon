@@ -1,6 +1,8 @@
 [workspace]
 members = [
+	"crates/prisma_cli",
 	"crates/procyon_log",
+	"crates/procyon_store",
 	"apps/desktop/src-tauri"
 ]
 resolver = "2"
