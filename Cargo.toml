@@ -2,6 +2,8 @@
 members = [
 	"crates/prisma_cli",
 	"crates/procyon_log",
+	"crates/procyon_plugin",
+	"crates/procyon_rpc",
 	"crates/procyon_store",
 	"apps/desktop/src-tauri"
 ]
