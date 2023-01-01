@@ -1,0 +1,3 @@
+[submodule "plugins/procyon-plugin-eddn/eddn"]
+	path = plugins/procyon-plugin-eddn/eddn
+	url = git@github.com:EDCD/EDDN.git

@@ -1,0 +1,17 @@
+{
+	"name": "procyon-plugin-eddn",
+	"version": "1.0.0",
+	"description": "",
+	"main": "dist/index.js",
+	"scripts": {
+		"prepare": "rimraf src/schema && json2ts -i 'EDDN/schemas/*.json' -o src/schema"
+	},
+	"dependencies": {
+		"@procyon/plugin": "workspace:*",
+		"axios": "^1.2.2"
+	},
+	"devDependencies": {
+		"json-schema-to-typescript": "^11.0.2",
+		"rimraf": "^3.0.2"
+	}
+}
