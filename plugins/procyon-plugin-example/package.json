@@ -3,7 +3,13 @@
 	"version": "1.0.0",
 	"description": "",
 	"main": "dist/index.js",
+	"scripts": {
+		"build": "node esbuild.config.mjs"
+	},
 	"dependencies": {
 		"@procyon/plugin": "workspace:*"
+	},
+	"devDependencies": {
+		"esbuild": "^0.16.12"
 	}
 }
