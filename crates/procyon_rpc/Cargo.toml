@@ -1,0 +1,15 @@
+[package]
+name = "procyon_rpc"
+version = "0.1.0"
+edition = "2021"
+
+[dependencies]
+rspc = { version = "0.1.2", features = ["tauri"] }
+
+[build-dependencies]
+anyhow = "1"
+vergen = "7"
+
+[[bin]]
+name = "procyon_rpc"
+path = "src/bin.rs"
