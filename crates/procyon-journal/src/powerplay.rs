@@ -1,24 +1,24 @@
 use serde::{Deserialize, Serialize};
 
 #[derive(Debug, Clone, Serialize, Deserialize, PartialEq)]
-#[serde(tag = "event")]
+#[serde(tag = "event", rename_all_fields = "PascalCase")]
 pub enum Powerplay {
     #[serde(rename = "PowerplayCollect")]
-    Collect,
+    Collect {},
     #[serde(rename = "PowerplayDefect")]
-    Defect,
+    Defect {},
     #[serde(rename = "PowerplayDeliver")]
-    Deliver,
+    Deliver {},
     #[serde(rename = "PowerplayFastTrack")]
-    FastTrack,
+    FastTrack {},
     #[serde(rename = "PowerplayJoin")]
-    Join,
+    Join {},
     #[serde(rename = "PowerplayLeave")]
-    Leave,
+    Leave {},
     #[serde(rename = "PowerplaySalary")]
-    Salary,
+    Salary {},
     #[serde(rename = "PowerplayVote")]
-    Vote,
+    Vote {},
     #[serde(rename = "PowerplayVoucher")]
-    Voucher,
+    Voucher {},
 }

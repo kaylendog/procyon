@@ -2,31 +2,29 @@
 
 use serde::{Deserialize, Serialize};
 
-use crate::common::{EconomyType, GovernmentType, StarPos};
-
 /// An enumeration of travel related events.
 #[derive(Debug, Clone, PartialEq, Serialize, Deserialize)]
-#[serde(tag = "event")]
+#[serde(tag = "event", rename_all_fields = "PascalCase")]
 pub enum Travel {
-    ApproachBody,
-    Docked,
-    DockingCancelled,
-    DockingDenied,
-    DockingGranted,
-    DockingRequested,
-    DockingTimeout,
-    FSDJump,
-    FSDTarget,
-    LeaveBody,
-    Liftoff,
-    Location,
-    StartJump,
-    SupercruiseEntry,
-    SupercruiseExit,
-    Touchdown,
-    Undocked,
-    NavRoute,
-    NavRouteClear,
+    ApproachBody {},
+    Docked {},
+    DockingCancelled {},
+    DockingDenied {},
+    DockingGranted {},
+    DockingRequested {},
+    DockingTimeout {},
+    FSDJump {},
+    FSDTarget {},
+    LeaveBody {},
+    Liftoff {},
+    Location {},
+    StartJump {},
+    SupercruiseEntry {},
+    SupercruiseExit {},
+    Touchdown {},
+    Undocked {},
+    NavRoute {},
+    NavRouteClear {},
 }
 
 /// Event emitted when the commander docks at a station.
@@ -117,40 +115,6 @@ pub struct DockingTimeout {
     pub station_name: String,
 }
 
-/// Event emitted when a player jumps to another star system.
-#[derive(Debug, Clone, PartialEq, Serialize, Deserialize)]
-#[serde(rename_all = "PascalCase")]
-pub struct FSDJump {
-    /// The name of the star system.
-    pub star_system: String,
-    /// The position of the star system relative to Sol.
-    pub star_pos: StarPos,
-    /// The star system's economy type.
-    pub economy: EconomyType,
-    /// The star system's allegiance.
-    pub allegiance: String,
-    /// The star system's government type.
-    pub government: GovernmentType,
-    /// The star system's security rating.
-    pub security: String,
-    /// The jump distance.
-    pub jump_dist: f64,
-    /// The fuel used by the jump.
-    pub fuel_used: f64,
-    /// The fuel after the jump.
-    pub fuel_level: f64,
-    /// The system controlling faction.
-    pub faction: String,
-    /// The state of the system controlling faction.
-    pub faction_state: String,
-    /// The ruling power of this system.
-    pub power: Option<String>,
-    /// Powers contesting this system.
-    pub powers: Option<Vec<String>>,
-    /// The state of power play in this system.
-    pub powerplay_state: Option<PowerplayState>,
-}
-
 #[derive(Debug, Clone, PartialEq, Eq, Serialize, Deserialize)]
 pub enum PowerplayState {
     InPrepareRadius,
@@ -168,31 +132,6 @@ pub enum PowerplayState {
 pub struct Liftoff {
     pub latitude: f64,
     pub longitude: f64,
-}
-
-/// Event emitted at startup or after resurrection.
-#[derive(Default, Debug, Clone, PartialEq, Serialize, Deserialize)]
-#[serde(rename_all = "PascalCase")]
-pub struct Location {
-    pub event: String,
-    pub docked: bool,
-    pub star_system: String,
-    pub star_pos: StarPos,
-    pub allegiance: String,
-    pub economy: String,
-    #[serde(rename = "Economy_Localised")]
-    pub economy_localised: String,
-    pub government: String,
-    #[serde(rename = "Government_Localised")]
-    pub government_localised: String,
-    pub security: String,
-    #[serde(rename = "Security_Localised")]
-    pub security_localised: String,
-    pub body: String,
-    pub powers: Vec<String>,
-    pub powerplay_state: String,
-    pub faction: String,
-    pub faction_state: String,
 }
 
 /// Event emitted when entering supercruise from normal space.

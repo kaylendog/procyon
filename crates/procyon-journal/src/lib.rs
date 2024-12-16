@@ -6,12 +6,13 @@ use std::{
     io::{BufRead, BufReader, Lines},
 };
 
-use carrier::Carrier;
 use chrono::{DateTime, Utc};
+use combat::Combat;
+use exploration::Exploration;
+use serde::{Deserialize, Serialize};
 
 pub mod carrier;
 pub mod combat;
-pub mod common;
 pub mod exploration;
 pub mod misc;
 pub mod odyssey;
@@ -22,15 +23,15 @@ pub mod station;
 pub mod trade;
 pub mod travel;
 
+use carrier::Carrier;
 use misc::Misc;
 use odyssey::Odyssey;
 use powerplay::Powerplay;
-use serde::{Deserialize, Serialize};
 use squadron::Squadron;
 use startup::Startup;
 use station::Station;
 use trade::Trade;
-
+use travel::Travel;
 /// A log entry in the Elite Dangerous game journal.
 #[derive(Debug, Serialize, Deserialize, PartialEq)]
 pub struct Entry {
@@ -75,85 +76,8 @@ pub enum Event {
     Misc(Misc),
 }
 
-/// An enumeration of travel event types.
-#[derive(Debug, Serialize, Deserialize, PartialEq)]
-pub enum Travel {
-    ApproachBody,
-    Docked,
-    DockingCancelled,
-    DockingDenied,
-    DockingGranted,
-    DockingRequested,
-    DockingTimeout,
-    FSDJump,
-    FSDTarget,
-    LeaveBody,
-    Liftoff,
-    Location,
-    StartJump,
-    SupercruiseEntry,
-    SupercruiseExit,
-    Touchdown,
-    Undocked,
-    NavRoute,
-    NavRouteClear,
-}
-
-/// An enumeration of combat event types.
-#[derive(Debug, Serialize, Deserialize, PartialEq)]
-pub enum Combat {
-    Bounty,
-    CapShipBond,
-    Died,
-    // Died,  - deaths to wings
-    EscapeInterdiction,
-    FactionKillBond,
-    FighterDestroyed,
-    HeatDamage,
-    HeatWarning,
-    HullDamage,
-    Interdicted,
-    Interdiction,
-    PVPKill,
-    ShieldState,
-    ShipTargetted,
-    SRVDestroyed,
-    UnderAttack,
-}
-
-/// An enumeration of exploration event types.
-#[derive(Debug, Serialize, Deserialize, PartialEq)]
-pub enum Exploration {
-    CodexEntry,
-    DiscoveryScan,
-    Scan,
-    FSSAllBodiesFound,
-    FSSBodySignals,
-    FSSDiscoveryScan,
-    FSSSignalDiscovered,
-    MaterialCollected,
-    MaterialDiscarded,
-    MaterialDiscovered,
-    MultiSellExplorationData,
-    NavBeaconScan,
-    BuyExplorationData,
-    SAAScanComplete,
-    SAASignalsFound,
-    ScanBaryCentre,
-    SellExplorationData,
-    Screenshot,
-}
-
-#[derive(Default, Debug, Clone, PartialEq, Serialize, Deserialize)]
-#[serde(rename_all = "PascalCase")]
-pub struct Root {
-    #[serde(rename = "timestamp")]
-    pub timestamp: String,
-    #[serde(rename = "event")]
-    pub event: String,
-}
-
 /// A reader for Elite Dangerous journal files.
+#[derive(Debug)]
 pub struct JournalReader {
     /// The inner lines iterator.
     inner: Lines<BufReader<File>>,

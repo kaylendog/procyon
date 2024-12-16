@@ -3,25 +3,26 @@
 use serde::{Deserialize, Serialize};
 
 #[derive(Debug, Clone, PartialEq, Serialize, Deserialize)]
-pub enum ExplorationEvent {
-    CodexEntry,
-    DiscoveryScan,
-    Scan,
-    FSSAllBodiesFound,
-    FSSBodySignals,
-    FSSDiscoveryScan,
-    FSSSignalDiscovered,
-    MaterialCollected,
-    MaterialDiscarded,
-    MaterialDiscovered,
-    MultiSellExplorationData,
-    NavBeaconScan,
-    BuyExplorationData,
-    SAAScanComplete,
-    SAASignalsFound,
-    ScanBaryCentre,
-    SellExplorationData,
-    Screenshot,
+#[serde(tag = "event", rename_all_fields = "PascalCase")]
+pub enum Exploration {
+    CodexEntry {},
+    DiscoveryScan {},
+    Scan {},
+    FSSAllBodiesFound {},
+    FSSBodySignals {},
+    FSSDiscoveryScan {},
+    FSSSignalDiscovered {},
+    MaterialCollected {},
+    MaterialDiscarded {},
+    MaterialDiscovered {},
+    MultiSellExplorationData {},
+    NavBeaconScan {},
+    BuyExplorationData {},
+    SAAScanComplete {},
+    SAASignalsFound {},
+    ScanBaryCentre {},
+    SellExplorationData {},
+    Screenshot {},
 }
 
 #[derive(Debug, Clone, PartialEq, Serialize, Deserialize)]

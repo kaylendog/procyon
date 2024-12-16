@@ -1,38 +1,38 @@
 use serde::{Deserialize, Serialize};
 
 #[derive(Debug, Clone, Serialize, Deserialize, PartialEq)]
-#[serde(tag = "event")]
+#[serde(tag = "event", rename_all_fields = "PascalCase")]
 pub enum Carrier {
     #[serde(rename = "CarrierJump")]
-    Jump,
+    Jump {},
     #[serde(rename = "CarrierBuy")]
-    Buy,
+    Buy {},
     #[serde(rename = "CarrierStats")]
-    Stats,
+    Stats {},
     #[serde(rename = "CarrierJumpRequest")]
-    JumpRequest,
+    JumpRequest {},
     #[serde(rename = "CarrierDecommission")]
-    Decommission,
+    Decommission {},
     #[serde(rename = "CarrierCancelDecommission")]
-    CancelDecommission,
+    CancelDecommission {},
     #[serde(rename = "CarrierBankTransfer")]
-    BankTransfer,
+    BankTransfer {},
     #[serde(rename = "CarrierDepositFuel")]
-    DepositFuel,
+    DepositFuel {},
     #[serde(rename = "CarrierCrewServices")]
-    CrewServices,
+    CrewServices {},
     #[serde(rename = "CarrierFinance")]
-    Finance,
+    Finance {},
     #[serde(rename = "CarrierShipPack")]
-    ShipPack,
+    ShipPack {},
     #[serde(rename = "CarrierModulePack")]
-    ModulePack,
+    ModulePack {},
     #[serde(rename = "CarrierTradeOrder")]
-    TradeOrder,
+    TradeOrder {},
     #[serde(rename = "CarrierDockingPermission")]
-    DockingPermission,
+    DockingPermission {},
     #[serde(rename = "CarrierNameChanged")]
-    NameChanged,
+    NameChanged {},
     #[serde(rename = "CarrierJumpCancelled")]
-    JumpCancelled,
+    JumpCancelled {},
 }
