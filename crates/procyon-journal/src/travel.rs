@@ -7,33 +7,26 @@ use crate::common::{EconomyType, GovernmentType, StarPos};
 /// An enumeration of travel related events.
 #[derive(Debug, Clone, PartialEq, Serialize, Deserialize)]
 #[serde(tag = "event")]
-pub enum TravelEvent {
-    /// Event emitted when the commander docks at a station.
-    Docked(Box<Docked>),
-    /// Event emitted when the commander cancels a docking request.
+pub enum Travel {
+    ApproachBody,
+    Docked,
     DockingCancelled,
-    /// Event emitted when a station denies a docking request.
-    DockingDenied(DockingDenied),
-    /// Event emitted when a station grants a docking request.
-    DockingGranted(DockingGranted),
-    /// Event emitted when the player requests docking at a station.
-    DockingRequested(DockingRequested),
-    /// Event emitted when a docking request times out.
-    DockingTimeout(DockingTimeout),
-    /// Event emitted when a player jumps to another star system.
-    FSDJump(FSDJump),
-    /// Event emitted when taking of from a planet's surface.
-    Liftoff(Liftoff),
-    /// Event emitted at startup or after resurrection.
-    Location(Location),
-    /// Event emitted when entering supercruise from normal space.
-    SupercruiseEntry(SupercruiseEntry),
-    /// Event emitted when exiting supercruise for normal space.
-    SupercruiseExit(SupercruiseExit),
-    /// Event emitted when landing on a planet's surface.
-    Touchdown(Touchdown),
-    /// Event emitted when lifting off from a landing pad in a station, outpost, or settlement.
-    Undocked(Undocked),
+    DockingDenied,
+    DockingGranted,
+    DockingRequested,
+    DockingTimeout,
+    FSDJump,
+    FSDTarget,
+    LeaveBody,
+    Liftoff,
+    Location,
+    StartJump,
+    SupercruiseEntry,
+    SupercruiseExit,
+    Touchdown,
+    Undocked,
+    NavRoute,
+    NavRouteClear,
 }
 
 /// Event emitted when the commander docks at a station.

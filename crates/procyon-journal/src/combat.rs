@@ -5,18 +5,23 @@ use serde::{Deserialize, Serialize};
 /// Enumeration of combat events.
 #[derive(Debug, Clone, PartialEq, Serialize, Deserialize)]
 pub enum CombatEvent {
-    Bounty(Bounty),
-    CapShipBond(CapShipBond),
-    Died(Died),
-    EscapeInterdiction(EscapeInterdiction),
-    FactionKillBond(FactionKillBond),
+    Bounty,
+    CapShipBond,
+    Died,
+    // Died,
+    EscapeInterdiction,
+    FactionKillBond,
+    FighterDestroyed,
     HeatDamage,
     HeatWarning,
-    HullDamage(HullDamage),
-    Interdicted(Interdicted),
-    Interdiction(Interdiction),
-    PVPKill(PVPKill),
-    ShieldState(ShieldState),
+    HullDamage,
+    Interdicted,
+    Interdiction,
+    PVPKill,
+    ShieldState,
+    ShipTargetted,
+    SRVDestroyed,
+    UnderAttack,
 }
 
 /// Event emitted when the player is awarded a bounty for a kill.

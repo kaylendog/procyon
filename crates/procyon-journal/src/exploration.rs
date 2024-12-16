@@ -4,13 +4,24 @@ use serde::{Deserialize, Serialize};
 
 #[derive(Debug, Clone, PartialEq, Serialize, Deserialize)]
 pub enum ExplorationEvent {
-    Scan(Box<Scan>),
-    MaterialCollected(MaterialInfo),
-    MaterialDiscarded(MaterialInfo),
-    MaterialDiscovered(MaterialDiscovered),
-    BuyExplorationData(BuyExplorationData),
-    SellExplorationData(SellExplorationData),
-    Screenshot(Screenshot),
+    CodexEntry,
+    DiscoveryScan,
+    Scan,
+    FSSAllBodiesFound,
+    FSSBodySignals,
+    FSSDiscoveryScan,
+    FSSSignalDiscovered,
+    MaterialCollected,
+    MaterialDiscarded,
+    MaterialDiscovered,
+    MultiSellExplorationData,
+    NavBeaconScan,
+    BuyExplorationData,
+    SAAScanComplete,
+    SAASignalsFound,
+    ScanBaryCentre,
+    SellExplorationData,
+    Screenshot,
 }
 
 #[derive(Debug, Clone, PartialEq, Serialize, Deserialize)]

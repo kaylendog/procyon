@@ -6,15 +6,30 @@ use std::{
     io::{BufRead, BufReader, Lines},
 };
 
+use carrier::Carrier;
 use chrono::{DateTime, Utc};
 
+pub mod carrier;
 pub mod combat;
 pub mod common;
 pub mod exploration;
-pub mod lifecycle;
+pub mod misc;
+pub mod odyssey;
+pub mod powerplay;
+pub mod squadron;
+pub mod startup;
+pub mod station;
+pub mod trade;
 pub mod travel;
 
+use misc::Misc;
+use odyssey::Odyssey;
+use powerplay::Powerplay;
 use serde::{Deserialize, Serialize};
+use squadron::Squadron;
+use startup::Startup;
+use station::Station;
+use trade::Trade;
 
 /// A log entry in the Elite Dangerous game journal.
 #[derive(Debug, Serialize, Deserialize, PartialEq)]
@@ -26,91 +41,116 @@ pub struct Entry {
     pub payload: Event,
 }
 
-/// An event type recorded in the game log. Contents are heap allocated since
-/// their size is significant.
+/// An event type recorded in the game log.
 #[derive(Debug, Serialize, Deserialize, PartialEq)]
-#[serde(tag = "event")]
+#[serde(untagged)]
 pub enum Event {
-    /// Cargo event.
-    Cargo,
-    /// Commander event.
-    Commander,
-    /// Engineer progress event.
-    EngineerProgress,
-    /// File header event.
-    Fileheader,
-    /// FSD jump event.
+    /// The file header, written at the beginning of each log file.
+    #[serde(rename_all = "camelCase")]
+    Fileheader {
+        part: i64,
+        language: String,
+        #[serde(rename = "Odyssey")]
+        odyssey: bool,
+        gameversion: String,
+        build: String,
+    },
+    /// Startup events, such as loading the game and identifying the commander.
+    Startup(Startup),
+    /// Travel events, such as jumping to a new system or docking at a station.
+    Travel(Travel),
+    /// Combat events, such as taking damage or destroying a ship.
+    Combat(Combat),
+    /// Exploration events.
+    Exploration(Exploration),
+    /// Trade events.
+    Trade(Trade),
+    /// Station events.
+    Station(Station),
+    /// Powerplay events.
+    Powerplay(Powerplay),
+    Squadron(Squadron),
+    Carrier(Carrier),
+    Odyssey(Odyssey),
+    Misc(Misc),
+}
+
+/// An enumeration of travel event types.
+#[derive(Debug, Serialize, Deserialize, PartialEq)]
+pub enum Travel {
+    ApproachBody,
+    Docked,
+    DockingCancelled,
+    DockingDenied,
+    DockingGranted,
+    DockingRequested,
+    DockingTimeout,
     FSDJump,
-    /// FSD target event.
     FSDTarget,
-    /// FSS signal discovered event.
-    FSSSignalDiscovered,
-    /// Fuel scoop event.
-    FuelScoop,
-    /// Load game event.
-    LoadGame,
-    /// Loadout event.
-    Loadout,
-    /// Location event.
+    LeaveBody,
+    Liftoff,
     Location,
-    /// Market event.
-    Market,
-    /// Materials event.
-    Materials,
-    /// Missions event.
-    Missions,
-    /// Module buy event.
-    ModuleBuy,
-    /// Module retrieve event.
-    ModuleRetrieve,
-    /// Module store event.
-    ModuleStore,
-    /// Music event.
-    Music,
-    /// Navigation route event.
-    NavRoute,
-    /// Navigation route clear event.
-    NavRouteClear,
-    /// NPC crew paid wage event.
-    NpcCrewPaidWage,
-    /// Outfitting event.
-    Outfitting,
-    /// Progress event.
-    Progress,
-    /// Rank event.
-    Rank,
-    /// Receive text event.
-    ReceiveText,
-    /// Reputation event.
-    Reputation,
-    /// Scan event.
-    Scan,
-    /// Scan barycentre event.
-    ScanBaryCentre,
-    /// Sell drones event.
-    SellDrones,
-    /// Ship locker event.
-    ShipLocker,
-    /// Shipyard event.
-    Shipyard,
-    /// Shipyard swap event.
-    ShipyardSwap,
-    /// Shutdown event.
-    Shutdown,
-    /// Start jump event.
     StartJump,
-    /// Statistics event.
-    Statistics,
-    /// Stored modules event.
-    StoredModules,
-    /// Stored ships event.
-    StoredShips,
-    /// Undocked event.
+    SupercruiseEntry,
+    SupercruiseExit,
+    Touchdown,
     Undocked,
-    /// Module info event.
-    ModuleInfo,
-    /// Jet cone boost event.
-    JetConeBoost,
+    NavRoute,
+    NavRouteClear,
+}
+
+/// An enumeration of combat event types.
+#[derive(Debug, Serialize, Deserialize, PartialEq)]
+pub enum Combat {
+    Bounty,
+    CapShipBond,
+    Died,
+    // Died,  - deaths to wings
+    EscapeInterdiction,
+    FactionKillBond,
+    FighterDestroyed,
+    HeatDamage,
+    HeatWarning,
+    HullDamage,
+    Interdicted,
+    Interdiction,
+    PVPKill,
+    ShieldState,
+    ShipTargetted,
+    SRVDestroyed,
+    UnderAttack,
+}
+
+/// An enumeration of exploration event types.
+#[derive(Debug, Serialize, Deserialize, PartialEq)]
+pub enum Exploration {
+    CodexEntry,
+    DiscoveryScan,
+    Scan,
+    FSSAllBodiesFound,
+    FSSBodySignals,
+    FSSDiscoveryScan,
+    FSSSignalDiscovered,
+    MaterialCollected,
+    MaterialDiscarded,
+    MaterialDiscovered,
+    MultiSellExplorationData,
+    NavBeaconScan,
+    BuyExplorationData,
+    SAAScanComplete,
+    SAASignalsFound,
+    ScanBaryCentre,
+    SellExplorationData,
+    Screenshot,
+}
+
+#[derive(Default, Debug, Clone, PartialEq, Serialize, Deserialize)]
+#[serde(rename_all = "PascalCase")]
+pub struct Root {
+    #[serde(rename = "timestamp")]
+    pub timestamp: String,
+    #[serde(rename = "event")]
+    pub event: String,
 }
 
 /// A reader for Elite Dangerous journal files.
