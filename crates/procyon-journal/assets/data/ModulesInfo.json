@@ -1,0 +1,15 @@
+{ "timestamp":"2024-12-15T23:58:34Z", "event":"ModuleInfo", "Modules":[ 
+{ "Slot":"ShieldGenerator", "Item":"int_shieldgenerator_size0_class3", "Power":0.600000, "Priority":2 }, 
+{ "Slot":"Radar", "Item":"int_sensors_surface_size1_class1", "Power":0.500000, "Priority":2 }, 
+{ "Slot":"Turret", "Item":"vehicle_turretgun", "Power":0.250000, "Priority":2 }, 
+{ "Slot":"SineWaveScanner", "Item":"int_sinewavescanner_size1_class1", "Power":0.150000, "Priority":2 }, 
+{ "Slot":"PowerDistributor", "Item":"int_powerdistributor_size0_class1", "Power":0.125000, "Priority":2 }, 
+{ "Slot":"BuggyCargoHatch", "Item":"buggycargobaydoor", "Power":0.125000, "Priority":2 }, 
+{ "Slot":"DataLinkScanner", "Item":"hpt_datalinkscanner", "Power":0.125000, "Priority":2 }, 
+{ "Slot":"LifeSupport", "Item":"int_lifesupport_size0_class1", "Power":0.125000, "Priority":2 }, 
+{ "Slot":"ShipCockpit", "Item":"testbuggy_cockpit", "Power":0.000000 }, 
+{ "Slot":"PowerPlant", "Item":"int_powerplant_size0_class1", "Power":0.000000 }, 
+{ "Slot":"FuelTank", "Item":"int_fueltank_size0_class3", "Power":0.000000 }, 
+{ "Slot":"CodexScanner", "Item":"int_codexscanner", "Power":0.000000 }, 
+{ "Slot":"Armour", "Item":"scarab_armour_grade1", "Power":0.000000 }
+ ] }

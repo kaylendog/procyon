@@ -1,19 +1,19 @@
 {
 	"private": true,
 	"scripts": {
-		"prepare": "husky install"
+		"prepare": "husky"
 	},
 	"devDependencies": {
-		"@commitlint/cli": "^17.3.0",
-		"@commitlint/config-conventional": "^17.3.0",
-		"@typescript-eslint/eslint-plugin": "^5.47.1",
-		"@typescript-eslint/parser": "^5.47.1",
-		"eslint": "^8.30.0",
-		"eslint-config-prettier": "^8.5.0",
-		"husky": "^8.0.2",
-		"lint-staged": "^13.1.0",
-		"prettier": "^2.8.1",
-		"turbo": "^1.6.3",
-		"typescript": "^4.9.4"
+		"@commitlint/cli": "^19.6.1",
+		"@commitlint/config-conventional": "^19.6.0",
+		"@typescript-eslint/eslint-plugin": "^8",
+		"@typescript-eslint/parser": "^8",
+		"eslint": "^9",
+		"eslint-config-infernal": "6",
+		"husky": "^9",
+		"lint-staged": "^15.2.11",
+		"prettier": "^3.4.2",
+		"turbo": "^2.3.3",
+		"typescript": "^5.7.2"
 	}
 }
