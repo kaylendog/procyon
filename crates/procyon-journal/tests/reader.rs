@@ -20,6 +20,6 @@ fn parse_example_data() {
         if errors.len() > 0 {
             println!("{:#?}", errors);
         }
-        assert_eq!(0, errors.len());
+        assert_eq!(0, errors.len(), "{}", file);
     }
 }

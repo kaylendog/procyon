@@ -11,7 +11,13 @@ pub enum Exploration {
     FSSAllBodiesFound {},
     FSSBodySignals {},
     FSSDiscoveryScan {},
-    FSSSignalDiscovered {},
+    FSSSignalDiscovered {
+        system_address: u64,
+        signal_name: String,
+        #[serde(rename = "SignalName_Localised")]
+        signal_name_localised: Option<String>,
+        signal_type: String,
+    },
     MaterialCollected {},
     MaterialDiscarded {},
     MaterialDiscovered {},
