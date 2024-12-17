@@ -1,107 +1,169 @@
-//! Provides data types for working with Elite Dangerous's journal files.
+//! A library for parsing and reading Elite Dangerous journal files.
 
-use std::{
-    error::Error,
-    fs::File,
-    io::{BufRead, BufReader, Lines},
-};
-
-use chrono::{DateTime, Utc};
-use combat::Combat;
-use exploration::Exploration;
 use serde::{Deserialize, Serialize};
 
-pub mod carrier;
-pub mod combat;
-pub mod exploration;
-pub mod misc;
-pub mod odyssey;
-pub mod powerplay;
-pub mod squadron;
-pub mod startup;
-pub mod station;
-pub mod trade;
-pub mod travel;
+pub mod event;
 
-use carrier::Carrier;
-use misc::Misc;
-use odyssey::Odyssey;
-use powerplay::Powerplay;
-use squadron::Squadron;
-use startup::Startup;
-use station::Station;
-use trade::Trade;
-use travel::Travel;
-/// A log entry in the Elite Dangerous game journal.
-#[derive(Debug, Serialize, Deserialize, PartialEq)]
-pub struct Entry {
-    /// The time at which this event occured.
-    pub timestamp: DateTime<Utc>,
-    /// The event's payload.
-    #[serde(flatten)]
-    pub payload: Event,
+#[derive(Default, Debug, Clone, PartialEq, Serialize, Deserialize)]
+#[serde(rename_all = "PascalCase")]
+pub struct Backpack {
+    #[serde(rename = "timestamp")]
+    pub timestamp: String,
+    #[serde(rename = "event")]
+    pub event: String,
+    // TODO: item types
+    pub items: Vec<()>,
+    pub components: Vec<()>,
+    pub consumables: Vec<()>,
+    pub data: Vec<()>,
 }
 
-/// An event type recorded in the game log.
-#[derive(Debug, Serialize, Deserialize, PartialEq)]
-#[serde(untagged)]
-pub enum Event {
-    /// The file header, written at the beginning of each log file.
-    #[serde(rename_all = "camelCase")]
-    Fileheader {
-        part: i64,
-        language: String,
-        #[serde(rename = "Odyssey")]
-        odyssey: bool,
-        gameversion: String,
-        build: String,
-    },
-    /// Startup events, such as loading the game and identifying the commander.
-    Startup(Startup),
-    /// Travel events, such as jumping to a new system or docking at a station.
-    Travel(Travel),
-    /// Combat events, such as taking damage or destroying a ship.
-    Combat(Combat),
-    /// Exploration events.
-    Exploration(Exploration),
-    /// Trade events.
-    Trade(Trade),
-    /// Station events.
-    Station(Station),
-    /// Powerplay events.
-    Powerplay(Powerplay),
-    Squadron(Squadron),
-    Carrier(Carrier),
-    Odyssey(Odyssey),
-    Misc(Misc),
+#[derive(Default, Debug, Clone, PartialEq, Serialize, Deserialize)]
+#[serde(rename_all = "PascalCase")]
+pub struct Cargo {
+    #[serde(rename = "timestamp")]
+    pub timestamp: String,
+    #[serde(rename = "event")]
+    pub event: String,
+    pub vessel: String,
+    pub count: i64,
+    pub inventory: Vec<()>,
 }
 
-/// A reader for Elite Dangerous journal files.
-#[derive(Debug)]
-pub struct JournalReader {
-    /// The inner lines iterator.
-    inner: Lines<BufReader<File>>,
+#[derive(Debug, Clone, PartialEq, Serialize, Deserialize)]
+#[serde(rename_all = "PascalCase")]
+pub struct Market {
+    #[serde(rename = "timestamp")]
+    pub timestamp: String,
+    #[serde(rename = "event")]
+    pub event: String,
+    #[serde(rename = "MarketID")]
+    pub market_id: i64,
+    pub station_name: String,
+    pub station_type: String,
+    pub star_system: String,
+    pub items: Vec<MarketItem>,
 }
 
-impl JournalReader {
-    /// Create a new journal reader from a file.
-    pub fn new(inner: File) -> Self {
-        Self { inner: BufReader::new(inner).lines() }
-    }
+#[derive(Debug, Clone, PartialEq, Serialize, Deserialize)]
+#[serde(rename_all = "PascalCase")]
+pub struct MarketItem {
+    #[serde(rename = "id")]
+    pub id: i64,
+    pub name: String,
+    #[serde(rename = "Name_Localised")]
+    pub name_localised: String,
+    pub category: String,
+    #[serde(rename = "Category_Localised")]
+    pub category_localised: String,
+    pub buy_price: i64,
+    pub sell_price: i64,
+    pub mean_price: i64,
+    pub stock_bracket: i64,
+    pub demand_bracket: i64,
+    pub stock: i64,
+    pub demand: i64,
+    pub consumer: bool,
+    pub producer: bool,
+    pub rare: bool,
 }
 
-impl Iterator for JournalReader {
-    type Item = Result<Entry, Box<dyn Error>>;
+pub struct ModuleInfo {
+    pub modules: Vec<Module>,
+}
 
-    fn next(&mut self) -> Option<Self::Item> {
-        let line = match self.inner.next()? {
-            Ok(line) => line,
-            Err(e) => return Some(Err(e.into())),
-        };
-        let entry: Entry = match serde_json::from_str(&line) {
-            Ok(entry) => entry,
-            Err(e) => return Some(Err(e.into())),
-        };
-        Some(Ok(entry))
-    }
+#[derive(Debug, Clone, PartialEq, Serialize, Deserialize)]
+#[serde(rename_all = "PascalCase")]
+pub struct Module {
+    pub slot: String,
+    pub item: String,
+    pub power: f64,
+    pub priority: Option<i64>,
+}
+
+pub struct RouteInfo {
+    pub route: Vec<RouteEntry>,
+}
+
+#[derive(Debug, Clone, PartialEq, Serialize, Deserialize)]
+#[serde(rename_all = "PascalCase")]
+pub struct RouteEntry {
+    pub star_system: String,
+    pub system_address: i64,
+    pub star_pos: (f64, f64, f64),
+    pub star_class: String,
+}
+
+#[derive(Debug, Clone, PartialEq, Serialize, Deserialize)]
+#[serde(rename_all = "PascalCase")]
+pub struct Outfitting {
+    pub market_id: i64,
+    pub station_name: String,
+    pub star_system: String,
+    pub horizons: bool,
+    pub items: Vec<OutfittingItem>,
+}
+
+#[derive(Debug, Clone, PartialEq, Serialize, Deserialize)]
+#[serde(rename_all = "PascalCase")]
+pub struct OutfittingItem {
+    #[serde(rename = "id")]
+    pub id: i64,
+    pub name: String,
+    pub buy_price: i64,
+}
+
+#[derive(Debug, Clone, PartialEq, Serialize, Deserialize)]
+#[serde(rename_all = "PascalCase")]
+pub struct ShipLocker {
+    pub items: Vec<()>,
+    pub components: Vec<()>,
+    pub consumables: Vec<()>,
+    pub data: Vec<()>,
+}
+
+#[derive(Debug, Clone, PartialEq, Serialize, Deserialize)]
+#[serde(rename_all = "PascalCase")]
+pub struct Shipyard {
+    pub market_id: i64,
+    pub station_name: String,
+    pub star_system: String,
+    pub horizons: bool,
+    #[serde(rename = "AllowCobraMkIV")]
+    pub allow_cobra_mk_iv: bool,
+    pub price_list: Vec<PriceList>,
+}
+
+#[derive(Debug, Clone, PartialEq, Serialize, Deserialize)]
+#[serde(rename_all = "PascalCase")]
+pub struct PriceList {
+    #[serde(rename = "id")]
+    pub id: i64,
+    pub ship_type: String,
+    pub ship_price: i64,
+    #[serde(rename = "ShipType_Localised")]
+    pub ship_type_localised: Option<String>,
+}
+
+#[derive(Debug, Clone, PartialEq, Serialize, Deserialize)]
+#[serde(rename_all = "PascalCase")]
+pub struct Status {
+    pub flags: i64,
+}
+
+pub mod prelude {
+    //! Prelude module for easy importing of all event types.
+
+    pub use crate::event::{Entry, Event, JournalReader};
+
+    pub use crate::event::combat::*;
+    pub use crate::event::exploration::*;
+    pub use crate::event::misc::*;
+    pub use crate::event::odyssey::*;
+    pub use crate::event::powerplay::*;
+    pub use crate::event::squadron::*;
+    pub use crate::event::startup::*;
+    pub use crate::event::station::*;
+    pub use crate::event::trade::*;
+    pub use crate::event::travel::*;
 }
