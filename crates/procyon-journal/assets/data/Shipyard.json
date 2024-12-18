@@ -1,9 +1,0 @@
-{ "timestamp":"2024-12-08T23:52:29Z", "event":"Shipyard", "MarketID":3228029952, "StationName":"Bennett Gateway", "StarSystem":"Okinura", "Horizons":true, "AllowCobraMkIV":false, "PriceList":[ 
-{ "id":0, "ShipType":"python", "ShipPrice":79986002 }, 
-{ "id":0, "ShipType":"sidewinder", "ShipPrice":203087 }, 
-{ "id":0, "ShipType":"cobramkiii", "ShipType_Localised":"Cobra Mk III", "ShipPrice":313396 }, 
-{ "id":0, "ShipType":"type6", "ShipType_Localised":"Type-6 Transporter", "ShipPrice":1577598 }, 
-{ "id":0, "ShipType":"vulture", "ShipPrice":6758887 }, 
-{ "id":0, "ShipType":"asp", "ShipType_Localised":"Asp Explorer", "ShipPrice":17656513 }, 
-{ "id":0, "ShipType":"anaconda", "ShipPrice":268825583 }
- ] }
